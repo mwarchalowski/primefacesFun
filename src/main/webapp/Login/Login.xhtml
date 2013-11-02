@@ -9,18 +9,19 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body style="font-size: 12px">
+       
         <h:form>
             <p:panel header="Login" style="width: 400px; margin: 100px auto">  
                 <p:messages id="messages" showDetail="true" autoUpdate="true"/>
                 <h:panelGrid columns="2" cellpadding="10">                     
                     <h:outputLabel for="loginfield" value="Login:" />  
-                    <p:inputText id="loginfield" value="#{loginController.username}" label="login" required="true"/>  
+                    <p:inputText id="loginfield" value="#{userManager.username}" label="login" required="true"/>  
 
                     <h:outputLabel for="pwd2" value="Password:" />  
-                    <p:password id="pwd2" value="#{loginController.password}" label="login" required="true"/>  
+                    <p:password id="pwd2" value="#{userManager.password}" label="login" required="true"/>  
                     <f:facet name="footer">  
                         <p:commandButton id="loginButton" value="Login"    
-                                         actionListener="#{loginController.login()}"  
+                                         action="#{userManager.login()}"
                                          />  
                     </f:facet> 
                 </h:panelGrid>  
