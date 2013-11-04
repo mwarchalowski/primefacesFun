@@ -9,39 +9,57 @@
         <h:head>
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/custom.css" />
                 <title>PrimeFaces</title>
             </f:facet>
         </h:head>
 
-        <h:body>
+        <h:body style="font-size: 12px">
 
             <p:layout fullPage="true">
 
-                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-                    Header
-                </p:layoutUnit>
-
-                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
-                    Footer
-                </p:layoutUnit>
-
-                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
-                    <p:menu>
-                        <p:submenu label="Resources">
-                            <p:menuitem value="Demo" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
-                            <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
-                            <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
-                            <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
-
-                        </p:submenu>
-
-                    </p:menu>
-                </p:layoutUnit>
-                
-                <p:layoutUnit position="center">
+                <p:layoutUnit position="north" size="160" closable="true" collapsible="true">
                     <h:form>
-                        <p:commandButton value="Logout" action="#{userManager.logout()}" />
+                        <p:dock position="top" itemWidth="80" proximity="80" maxWidth="30">
+                            <p:menuitem value="Home" icon="/images/categories/electronics.png" url="#" >
+                            </p:menuitem>
+                            <p:menuitem value="Music" icon="/images/categories/houseware.png"  url="#" />
+                            <p:menuitem value="Video" icon="/images/categories/electronics.png" url="#"/>
+                            <p:menuitem value="Email" icon="/images/categories/electronics.png" url="#"/>
+                            <p:menuitem value="Link" icon="/images/categories/electronics.png" url="#"/>
+                            <p:menuitem value="View Cart" icon="/images/menus/Cart.png" url="#"/>
+                            <p:menuitem value="Logout" icon="/images/menus/logout.png" action="#{userManager.logout()}"/>
+                        </p:dock>
                     </h:form>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="180" header="Categories" collapsible="true">
+                    <h:form>
+                        <p:carousel vertical="true" circular="true" numVisible="5" id="basicCarousel" value="#{categoryController.store_cats}" var="category">  
+     
+                            <h:panelGrid columns="1" style="width:100%" cellpadding="5" width="200" >
+                                <p:ajax event="click" listener="#{categoryController.setSelected(category)}" update=":dynamic-content" />
+                                <p:graphicImage value="#{imageRenderer.renderImage(category.catPicture)}" height="100" >
+                                    <f:param name="catid" value="#{category.catId}" />
+                                </p:graphicImage>
+                                <h:outputText value="#{category.catName}"/> 
+
+
+                            </h:panelGrid>  
+                        </p:carousel>  
+
+                    </h:form>  
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+  
+                    <p:panel id="dynamic-content" styleClass="dynamic_panel">
+                        <ui:include  src="CategoryDisplay.xhtml" />
+                    </p:panel>
+
+
+
+
                 </p:layoutUnit>
 
             </p:layout>

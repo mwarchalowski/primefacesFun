@@ -1,0 +1,64 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+
+    <p:panelGrid columns="1" rendered="#{not empty categoryController.selected_cat}" styleClass="no-borders">
+        <p:panelGrid columns="1" styleClass="no-borders">
+            <p:graphicImage value="#{imageRenderer.renderImage(categoryController.selected_cat.catPicture)}" height="300" styleClass="no-borders">
+                <f:param name="catid" value="#{categoryController.selected_cat.catId}"/>
+            </p:graphicImage>
+            <p:outputLabel>
+                #{categoryController.selected_cat.catName}
+            </p:outputLabel>
+            <p:outputLabel>
+                #{categoryController.selected_cat.catDescription}
+            </p:outputLabel>
+        </p:panelGrid>
+        <p:panel styleClass="no-borders">
+            <p:dataTable styleClass="products-table" style="width: 1200px" scrollable="false" var="items" value="#{categoryController.selected_cat.productList}" scrollHeight="350">  
+                <p:column >
+
+                    <p:graphicImage width="130" value="#{productImageRenderer.renderImage()}" rendered="true">
+                        <f:param name="img_attr_id" value="#{items.productcustomattrList.get(0).getPcaId()}" />
+                    </p:graphicImage>
+                </p:column>
+
+                <p:column headerText="Item">
+                    <h:outputText value="#{items.productName}" style="font-size: 16px; font-weight: bold"/> 
+                </p:column>
+                
+                <p:column headerText="Manufacturer">
+                    <ui:repeat value="#{items.productcustomattrList}" var="attributes">
+                        <h:outputText value="#{attributes.manufacturer}" />
+                    </ui:repeat>
+                </p:column>
+                <p:column headerText="Short Description">
+                    <ui:repeat value="#{items.productdetailList}" var="description">
+                        <h:outputText value="#{description.productDescrShort}"/>
+                    </ui:repeat>
+                </p:column>
+                <p:column headerText="Price">
+                    <ui:repeat value="#{items.productpricesList}" var="prices">
+                        <div>
+                            <h:outputText style="font-size: 10px;" value="#{prices.producPrice}"/>
+                        </div>
+                        <div>
+                            <h:outputText value="Special: #{prices.specialPrice}" styleClass="sale-price" />
+                        </div>
+                    </ui:repeat>
+                </p:column>
+                <p:column headerText="Actions">
+                    <p:commandButton title="View Details" icon="ui-icon-search"/>
+                    <p:commandButton title="Add to Cart" icon="ui-icon-circle-plus"/>
+                </p:column>
+
+
+            </p:dataTable>  
+        </p:panel>
+    </p:panelGrid>
+
+</ui:composition>
