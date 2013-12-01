@@ -30,7 +30,7 @@
                 <p:column headerText="Item">
                     <h:outputText value="#{items.productName}" style="font-size: 16px; font-weight: bold"/> 
                 </p:column>
-                
+
                 <p:column headerText="Manufacturer">
                     <ui:repeat value="#{items.productcustomattrList}" var="attributes">
                         <h:outputText value="#{attributes.manufacturer}" />
@@ -53,7 +53,12 @@
                 </p:column>
                 <p:column headerText="Actions">
                     <p:commandButton title="View Details" icon="ui-icon-search"/>
-                    <p:commandButton title="Add to Cart" icon="ui-icon-circle-plus"/>
+                    <p:commandButton title="Add to Cart" icon="ui-icon-circle-plus" actionListener="#{cartController.addItem(items)}">
+                        <p:effect for=":site-dock:cart-view" type="bounce" event="click" speed="100">
+                            <f:param name="times" value="2" />
+                        </p:effect>
+                    </p:commandButton>
+
                 </p:column>
 
 

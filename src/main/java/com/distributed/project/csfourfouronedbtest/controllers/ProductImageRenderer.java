@@ -42,7 +42,7 @@ public class ProductImageRenderer implements Serializable {
             return new DefaultStreamedContent(); 
         }
             Map param = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-            System.out.println("2nd Pass:");
+            //System.out.println("2nd Pass:");
 
             String attrib_id = (String) param.get("img_attr_id");
             int image_id = Integer.parseInt(attrib_id);

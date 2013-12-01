@@ -25,5 +25,19 @@
             <to-view-id>/Login/Login.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
-    </navigation-rule>  
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>cartView</from-outcome>
+            <to-view-id>/storefront/cart.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>checkout</from-outcome>
+            <to-view-id>/storefront/checkout.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

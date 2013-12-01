@@ -10,7 +10,7 @@
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
                 <link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/custom.css" />
-                <title>PrimeFaces</title>
+                <title>Checkout</title>
             </f:facet>
         </h:head>
 
@@ -41,7 +41,7 @@
                         <p:carousel vertical="true" circular="true" numVisible="5" id="basicCarousel" value="#{categoryController.store_cats}" var="category">  
 
                             <h:panelGrid columns="1" style="width:100%" cellpadding="5" width="200" >
-                                <p:ajax event="click" listener="#{categoryController.setSelected(category)}" update=":dynamic-content" />
+                                <p:ajax event="click" listener="#{categoryController.setSelected(category)}"/>
                                 <p:graphicImage value="#{imageRenderer.renderImage(category.catPicture)}" height="100">
                                     <f:param name="catid" value="#{category.catId}" />
                                 </p:graphicImage>
@@ -55,12 +55,34 @@
                 </p:layoutUnit>
 
                 <p:layoutUnit position="center">
+                    <h:form id="checkout-form">
+                        <p:panel header="Checkout" style="width: 400px; margin: auto">
+                            <p:messages id="messages" showDetail="true" autoUpdate="true"/>
+                            <h:panelGrid id="cc-info" rendered="#{not checkoutController.checkout_complete}" columns="2" cellpadding="10">                     
 
-                    <p:panel id="dynamic-content" styleClass="dynamic_panel">
-                        <ui:include  src="CategoryDisplay.xhtml" />
-                    </p:panel>
+                                <h:outputLabel for="name" value="Name on Card:" />  
+                                <p:inputText id="name" value="#{checkoutController.name_on_card}" label="cc-number" required="true"/>  
 
+                                <h:outputLabel for="cc-number" value="Credit Card:" />  
+                                <p:inputText id="cc-number" value="#{checkoutController.cc_number}" label="cc-number" required="true"/>  
 
+                                <h:outputLabel for="exp-month" value="Expiration Month:" />  
+                                <p:inputText id="exp-month" value="#{checkoutController.exp_month}" label="exp-month" required="true"/>  
+
+                                <h:outputLabel for="exp-year" value="Expiration Year" />  
+                                <p:inputText id="exp-year" value="#{checkoutController.exp_year}" label="exp-year" required="true"/> 
+
+                                <h:outputLabel for="ccv" value="CCV:" />  
+                                <p:inputText id="ccv" value="#{checkoutController.ccv}" label="ccv" required="true"/> 
+
+                                <f:facet name="footer">  
+                                    <p:commandButton id="loginButton" value="Complete Purchase"    
+                                                     action="#{checkoutController.completeCheckout()}" update=":checkout-form"
+                                                     />  
+                                </f:facet> 
+                            </h:panelGrid> 
+                        </p:panel>
+                    </h:form>
 
 
                 </p:layoutUnit>

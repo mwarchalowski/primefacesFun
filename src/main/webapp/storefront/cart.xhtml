@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/custom.css" />
+                <title>PrimeFaces</title>
+            </f:facet>
+        </h:head>
+
+        <h:body style="font-size: 12px">
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="160" closable="true" collapsible="true">
+                    <div class="logo-wrapper" style="logo">
+                        <p:graphicImage value="/images/menus/Emart.png" height="200" id="logo" />
+                    </div>
+                    <h:form>
+                        <p:dock position="top" itemWidth="80" proximity="80" maxWidth="30">
+                            <p:menuitem value="Home" icon="/images/categories/electronics.png" url="#" >
+                            </p:menuitem>
+                            <p:menuitem value="Music" icon="/images/categories/houseware.png"  url="#" />
+                            <p:menuitem value="Video" icon="/images/categories/electronics.png" url="#"/>
+                            <p:menuitem value="Email" icon="/images/categories/electronics.png" url="#"/>
+                            <p:menuitem value="Link" icon="/images/categories/electronics.png" url="#"/>
+                            <p:menuitem value="View Cart" icon="/images/menus/Cart.png" url="#"/>
+                            <p:menuitem value="Logout" icon="/images/menus/logout.png" action="#{userManager.logout()}"/>
+                        </p:dock>
+                    </h:form>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="180" header="Categories" collapsible="true">
+                    <h:form>
+                        <p:carousel vertical="true" circular="true" numVisible="5" id="basicCarousel" value="#{categoryController.store_cats}" var="category">  
+
+                            <h:panelGrid columns="1" style="width:100%" cellpadding="5" width="200" >
+                                <p:ajax event="click" listener="#{categoryController.setSelected(category)}"/>
+                                <p:graphicImage value="#{imageRenderer.renderImage(category.catPicture)}" height="100" >
+                                    <f:param name="catid" value="#{category.catId}" />
+                                </p:graphicImage>
+                                <h:outputText value="#{category.catName}"/> 
+
+
+                            </h:panelGrid>  
+                        </p:carousel>  
+
+                    </h:form>  
+                </p:layoutUnit>
+                <h:form id="cart-form">
+                    <p:layoutUnit position="center">
+
+                        <p:panelGrid columns="2" styleClass="no-borders">
+
+
+                            <p:graphicImage value="/images/menus/Cart.png" />
+                            <p:panelGrid id="totals-grid" columns="2">
+                                <p:outputLabel value="Subtotal: " />
+                                <p:outputLabel value="$#{cartController.subtotal}" />
+
+                                <p:outputLabel value="Shipping: " />
+                                <p:outputLabel value="$#{cartController.shipping}" />
+
+                                <p:outputLabel value="Tax: " />
+                                <p:outputLabel value="$#{cartController.tax}" />
+
+                                <p:outputLabel value="Total: " />
+                                <p:outputLabel value="$#{cartController.total}" />
+
+                                <p:commandButton action="checkout" value="Checkout"/>
+                            </p:panelGrid>
+
+
+
+                        </p:panelGrid>
+                        <div>
+                            <p:dataTable id="cart-table" styleClass="products-table" style="width: 1200px" scrollable="false" var="items" value="#{cartController.product_list}" scrollHeight="350">  
+                                <p:column >
+
+                                    <p:graphicImage width="130" value="#{productImageRenderer.renderImage()}" rendered="true">
+                                        <f:param name="img_attr_id" value="#{items.productcustomattrList.get(0).getPcaId()}" />
+                                    </p:graphicImage>
+                                </p:column>
+
+                                <p:column headerText="Item">
+                                    <h:outputText value="#{items.productName}" style="font-size: 16px; font-weight: bold"/> 
+                                </p:column>
+
+                                <p:column headerText="Manufacturer">
+                                    <ui:repeat value="#{items.productcustomattrList}" var="attributes">
+                                        <h:outputText value="#{attributes.manufacturer}" />
+                                    </ui:repeat>
+                                </p:column>
+                                <p:column headerText="Short Description">
+                                    <ui:repeat value="#{items.productdetailList}" var="description">
+                                        <h:outputText value="#{description.productDescrShort}"/>
+                                    </ui:repeat>
+                                </p:column>
+                                <p:column headerText="Price">
+                                    <ui:repeat value="#{items.productpricesList}" var="prices">
+                                        <div>
+                                            <h:outputText style="font-size: 10px;" value="#{prices.producPrice}"/>
+                                        </div>
+                                        <div>
+                                            <h:outputText value="Special: #{prices.specialPrice}" styleClass="sale-price" />
+                                        </div>
+                                    </ui:repeat>
+                                </p:column>
+                                <p:column headerText="Actions">
+                                    <p:commandButton title="View Details" icon="ui-icon-search"/>
+                                    <p:commandButton title="Remove Item" icon="ui-icon-closethick" actionListener="#{cartController.removeItem(items)}" update=":cart-form:cart-table :cart-form:totals-grid"> 
+
+
+                                    </p:commandButton>
+                                </p:column>
+
+                            </p:dataTable> 
+                        </div>
+
+
+                    </p:layoutUnit>
+                </h:form>
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
+

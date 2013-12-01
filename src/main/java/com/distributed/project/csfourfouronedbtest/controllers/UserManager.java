@@ -29,6 +29,10 @@ public class UserManager implements Serializable {
     private String password;
     private String username;
     private Customer current_customer;
+
+    public Customer getCurrent_customer() {
+        return current_customer;
+    }
     
     public UserManager() {
     }

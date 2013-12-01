@@ -30,7 +30,7 @@ public class CategoryController implements Serializable {
     private StoreCategories selected_cat;
 
     public StoreCategories getSelected_cat() {
-        System.out.println("get triggered");
+        //System.out.println("get triggered");
         return selected_cat;
     }
 

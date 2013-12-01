@@ -44,14 +44,14 @@ public class ImageRenderer implements Serializable {
     public StreamedContent renderImage(byte[] img) {
         
         if(img != null) {
-        System.out.println("Byte Length:" + img.length);
+        //System.out.println("Byte Length:" + img.length);
         ByteArrayInputStream bais = new ByteArrayInputStream(img);
         StreamedContent myImage = new DefaultStreamedContent(bais, "image/png");
         ready_image = myImage;
         return myImage;
         }
         Map param  = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        System.out.println("2nd Pass:");
+        //System.out.println("2nd Pass:");
         
         String cat_id =  (String)param.get("catid");
         int category = Integer.parseInt(cat_id);
@@ -60,13 +60,13 @@ public class ImageRenderer implements Serializable {
         return myImage;
     }
     public boolean hasImage(StoreCategories cat) {
-        System.out.println("Checking for image of category " + cat.getCatName());
+        //System.out.println("Checking for image of category " + cat.getCatName());
         if(cat.getCatPicture() != null) {
             
-            System.out.println("image is not null");
+            //System.out.println("image is not null");
              return true;
         }
-        System.out.println("Image Is null");
+        //System.out.println("Image Is null");
         return false;
     }
 }

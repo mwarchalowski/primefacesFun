@@ -36,3 +36,10 @@ border: none !important;
 .products-table {
     text-align: center;
 }
+
+.logo-wrapper { 
+    margin-left: 90px;
+    float: left;
+    height: 145px;
+    overflow: hidden;
+}
